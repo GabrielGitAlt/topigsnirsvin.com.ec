@@ -1,0 +1,57 @@
+name: Sync news from Mexico site
+
+# Pulls the latest news from topigsnorsvin.mx once a day (and on demand), applies
+# the Ecuador transforms, and republishes — so new Mexico articles appear here
+# automatically.
+
+on:
+  schedule:
+    - cron: '0 7 * * *' # daily ~07:00 UTC (about 02:00 in Ecuador)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sync-news
+  cancel-in-progress: false
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install httrack + rsync
+        run: sudo apt-get update && sudo apt-get install -y httrack rsync
+      - name: Sync news from Mexico
+        run: bash scripts/sync-news.sh
+      - name: Commit any news changes
+        run: |
+          git config user.name "news-sync-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No news changes to commit."
+          else
+            git commit -m "Auto-sync news from topigsnorsvin.mx ($(date -u +%Y-%m-%d))"
+            git push
+          fi
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/topigsnorsvin.mx
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
