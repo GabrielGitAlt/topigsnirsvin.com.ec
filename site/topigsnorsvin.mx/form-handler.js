@@ -226,12 +226,87 @@
     }
   }
 
+  // --- Navigation fixes ---------------------------------------------------
+  // The static mirror can't run Elementor's popup / mobile-menu JS, so wire the
+  // essentials ourselves: the "Elija su país" popup, the mobile hamburger menu,
+  // and tap-to-open submenus.
+  function popupIdFromHref(href) {
+    var m = /settings(?:%3D|=)([^&"']+)/.exec(href || '');
+    if (!m) return null;
+    try { return JSON.parse(atob(decodeURIComponent(m[1]))).id; } catch (_) { return null; }
+  }
+  function findPopupModal(id) {
+    var inner = id && document.querySelector('[data-elementor-id="' + id + '"]');
+    if (inner) return inner.closest('.elementor-popup-modal') || inner;
+    return document.querySelector('.elementor-popup-modal');
+  }
+  function openPopup(m) {
+    if (!m) return;
+    m.classList.add('tn-popup-open');
+    document.documentElement.classList.add('tn-noscroll');
+  }
+  function closePopup(m) {
+    if (!m) return;
+    m.classList.remove('tn-popup-open');
+    document.documentElement.classList.remove('tn-noscroll');
+  }
+
+  function initNav() {
+    if (document.documentElement.dataset.tnNav) return;
+    document.documentElement.dataset.tnNav = '1';
+
+    // A) Popups ("Elija su país", etc.) — delegated on document (capture).
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t.closest) return;
+      var open = t.closest('a[href*="popup%3Aopen"], a[href*="popup:open"]');
+      if (open) { e.preventDefault(); openPopup(findPopupModal(popupIdFromHref(open.getAttribute('href')))); return; }
+      var close = t.closest('a[href*="popup%3Aclose"], a[href*="popup:close"], .tn-popup-open .dialog-close-button, .tn-popup-open .dialog-lightbox-close-button, .tn-popup-open .eael-modal-close');
+      if (close) { e.preventDefault(); closePopup(close.closest('.elementor-popup-modal') || document.querySelector('.tn-popup-open')); return; }
+      if (t.classList && t.classList.contains('tn-popup-open')) { closePopup(t); }
+    }, true);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { var m = document.querySelector('.tn-popup-open'); if (m) closePopup(m); }
+    });
+
+    // B) Mobile hamburger toggles.
+    var toggles = document.querySelectorAll('.elementor-menu-toggle');
+    for (var i = 0; i < toggles.length; i++) {
+      (function (tg) {
+        tg.addEventListener('click', function (e) {
+          e.preventDefault();
+          var box = tg.closest('.elementor-widget-container') || document;
+          // The mobile menu is the <nav> dropdown, NOT the .sub-menu <ul>s.
+          var dd = box.querySelector('nav.elementor-nav-menu--dropdown, .elementor-nav-menu--dropdown:not(.sub-menu)');
+          var on = tg.classList.toggle('elementor-active');
+          tg.setAttribute('aria-expanded', on ? 'true' : 'false');
+          if (dd) {
+            if (on) dd.style.setProperty('--tn-menu-top', Math.max(0, tg.getBoundingClientRect().bottom) + 'px');
+            dd.classList.toggle('tn-menu-open', on);
+          }
+        });
+      })(toggles[i]);
+    }
+
+    // C) Tap-to-open submenus inside the mobile dropdown.
+    var subs = document.querySelectorAll('.elementor-nav-menu--dropdown .menu-item-has-children > a');
+    for (var j = 0; j < subs.length; j++) {
+      (function (a) {
+        a.addEventListener('click', function (e) {
+          var li = a.closest('li');
+          if (li && li.querySelector('.sub-menu, ul')) { e.preventDefault(); li.classList.toggle('tn-sub-open'); }
+        });
+      })(subs[j]);
+    }
+  }
+
   function init() {
     var forms = document.querySelectorAll('form.elementor-form');
     for (var i = 0; i < forms.length; i++) wire(forms[i]);
     fixSlideshowBackgrounds();
     // Retry: Element Pack may build/replace slides after our first pass.
     [300, 1000, 2500].forEach(function (t) { setTimeout(fixSlideshowBackgrounds, t); });
+    initNav();
   }
 
   if (document.readyState !== 'loading') init();
