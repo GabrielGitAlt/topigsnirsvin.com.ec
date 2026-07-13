@@ -255,6 +255,16 @@
     if (document.documentElement.dataset.tnNav) return;
     document.documentElement.dataset.tnNav = '1';
 
+    // "Elija su país" removed per request — hide its trigger(s).
+    var paisTriggers = document.querySelectorAll('a[href*="popup%3Aopen"], a[href*="popup:open"]');
+    for (var p = 0; p < paisTriggers.length; p++) {
+      var pa = paisTriggers[p];
+      if (/elija su pa[ií]s/i.test(pa.textContent || '') || popupIdFromHref(pa.getAttribute('href')) === '119185') {
+        var w = pa.closest('.elementor-widget-button, .elementor-widget') || pa;
+        w.style.display = 'none';
+      }
+    }
+
     // A) Popups ("Elija su país", etc.) — delegated on document (capture).
     document.addEventListener('click', function (e) {
       var t = e.target;

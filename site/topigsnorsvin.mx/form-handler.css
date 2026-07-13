@@ -110,3 +110,6 @@ html.tn-noscroll { overflow: hidden; }
     visibility: visible !important;
   }
 }
+
+/* "Elija su país" country selector removed per request */
+.elementor-element-f7e7bf1 { display: none !important; }
