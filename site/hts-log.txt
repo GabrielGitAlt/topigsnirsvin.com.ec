@@ -1,0 +1,61 @@
+HTTrack3.49-2 launched on Sun, 12 Jul 2026 12:38:16 at https://topigsnorsvin.mx/ -*/wp-json/* -*replytocom* -*/feed/*
+(httrack https://topigsnorsvin.mx/ -O ./site -F "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36" -n -%v -c6 -A100000000 -w -*/wp-json/* -*replytocom* -*/feed/* )
+
+Information, Warnings and Errors reported for this mirror:
+note:	the hts-log.txt file, and hts-cache folder, may contain sensitive information,
+	such as username/password authentication for websites mirrored in this project
+	do not share these files/folders if you want these information to remain private
+
+12:38:16	Warning: 	* security warning: maximum bandwidth limited to 250000 to avoid server overload
+12:39:56	Error: 	"Bad Request" (400) at link https://www.googletagmanager.com/gtm.js?id= (from https://topigsnorsvin.mx/)
+12:41:14	Error: 	"Forbidden" (403) at link https://topigsnorsvin.mx/wp-content/plugins/international-telephone-field-for-elementor-form-premium/build/frontend/ (from https://topigsnorsvin.mx/)
+12:41:15	Warning: 	Warning: store text/css without scan: ./site/gmpg.org/xfn/default.css
+12:41:18	Warning: 	Warning: store text/html without scan: ./site/gmpg.org/xfn/.html
+12:41:19	Warning: 	Warning: store text/html without scan: ./site/gmpg.org/xfn/intro.html
+12:41:21	Warning: 	Warning: store text/html without scan: ./site/gmpg.org/xfn/faq.html
+12:50:50	Error: 	"Not Found" (404) at link https://topigsnorsvin.bureautint.nl/dev2024/wp-content/uploads/2024/06/small-piglet-waiting-feed-pig-indoor-on-a-farm-yard-swine-in-the-stall-close-up-eyes-and-blur-portrait-animal-1-scaled.jpg (from https://topigsnorsvin.mx/noticias/page/2/)
+12:51:01	Warning: 	Moved Permanently for https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/facildeempezar/?display=newsletter
+12:51:01	Warning: 	File has moved from https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/facildeempezar/?display=newsletter to https://topigsnorsvin.mx/vitalidadenfasetemprana/facilcrecimiento/facildeempezar/?display=newsletter
+12:51:01	Warning: 	Moved Permanently for https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/crecimientoacelerado/?display=newsletter
+12:51:01	Warning: 	File has moved from https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/crecimientoacelerado/?display=newsletter to https://topigsnorsvin.mx/vitalidadenfasetemprana/facilcrecimiento/crecimientoacelerado/?display=newsletter
+12:51:01	Warning: 	Moved Permanently for https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/desarrollouniforme/?display=newsletter
+12:51:01	Warning: 	File has moved from https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/desarrollouniforme/?display=newsletter to https://topigsnorsvin.mx/vitalidadenfasetemprana/facilcrecimiento/desarrollouniforme/?display=newsletter
+12:51:01	Warning: 	Moved Permanently for https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/transicionsuave/?display=newsletter
+12:51:01	Warning: 	File has moved from https://topigsnorsvin.mx/vitalidadenfasetemprana/facil-crecimiento/transicionsuave/?display=newsletter to https://topigsnorsvin.mx/vitalidadenfasetemprana/facilcrecimiento/transicionsuave/?display=newsletter
+12:51:08	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-938x1024.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:51:08	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-2-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:51:08	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2024/08/Animal-Care-Prop12.jpg (from https://topigsnorsvin.mx/news/enhorabuena-a-bachoco-comprometidos-con-la-excelencia-empalme1-1-recibe-doble-reconocimiento-en-bienestar-animal/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2024/08/Anilam-Welfare.png (from https://topigsnorsvin.mx/news/enhorabuena-a-bachoco-comprometidos-con-la-excelencia-empalme1-1-recibe-doble-reconocimiento-en-bienestar-animal/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2024/08/bachoco-cerdo.png (from https://topigsnorsvin.mx/news/enhorabuena-a-bachoco-comprometidos-con-la-excelencia-empalme1-1-recibe-doble-reconocimiento-en-bienestar-animal/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2024/06/Topigs-Norsvin-inaugura-Topigs-Norway.pdf (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-delta-norway/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2024/06/La-facturacion-de-Topigs-Norsvin-sigue-creciendo-1.pdf (from https://topigsnorsvin.mx/news/topigs-norsvin-continua-con-su-crecimiento/)
+12:51:08	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2023/01/Calendario-2023-FINAL.pdf (from https://topigsnorsvin.mx/news/calendario-2023/)
+12:51:08	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada-1-3-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:51:12	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada2-1-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:51:48	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/09/CDG-EL-MILAGRO-2.mov (from https://topigsnorsvin.mx/news/topigs-norsvin-y-semen-cardona-inauguran-nuevo-centro-de-diseminacion-genetica-el-milagro/)
+12:51:48	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/07/Mitch_June-2021-683x1024.jpg (from https://topigsnorsvin.mx/news/tips-para-reducir-la-mortalidad-de-la-hembra/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/07/TOPIGS-NORSVIN-TEHUACAN-2.mov (from https://topigsnorsvin.mx/news/recorrido-virtual-cdg-las-cumbres/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/04/Las-Cumbres-laboratorio-1024x291.jpg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-nuevo-centro-de-diseminacion-genetica-las-cumbres/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/04/Las-Cumbres-1024x768.jpg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-nuevo-centro-de-diseminacion-genetica-las-cumbres/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/04/Las-Cumbres-3.jpg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-nuevo-centro-de-diseminacion-genetica-las-cumbres/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/03/Embarque-Norson-11.02.22-2-768x1024.jpg (from https://topigsnorsvin.mx/news/norson-elige-a-topigs-norsvin-como-su-principal-proveedor-de-genetica/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/03/Embarque-Norson-11.02.22-5-768x1024.jpg (from https://topigsnorsvin.mx/news/norson-elige-a-topigs-norsvin-como-su-principal-proveedor-de-genetica/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/03/TopigsNorsvin_Infographic-Pigbase_2022-ESPANOL-1.png (from https://topigsnorsvin.mx/news/50-millones-de-cerdos-en-la-base-de-datos-de-topigs-norsvin-pigbase/)
+12:52:23	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/tn-content/uploads/2022/03/Facebook.png (from https://topigsnorsvin.mx/news/historia-de-topigs-norsvin/)
+12:52:24	Error: 	"Not Found" (404) at link https://topigsnorsvin.mx/wp-content/uploads/sites/18/2025/04/arrow-pil-1.svg (from https://topigsnorsvin.mx/vitalidadenfasetemprana/iniciofuerte/pesosrobustosalnacer/?display=newsletter)
+12:53:11	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-938x1024.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:53:11	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-2-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:53:11	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:53:11	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada-1-3-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:53:11	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada2-1-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:53:16	Warning: 	Retry after error -5 (error:00000005:lib(0)::reason(5)) at link https://topigsnorsvin.com/tn-content/uploads/2022/07/Mitch_June-2021-683x1024.jpg (from https://topigsnorsvin.mx/news/tips-para-reducir-la-mortalidad-de-la-hembra/)
+12:54:28	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-938x1024.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:54:28	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-2-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:54:28	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2024/08/first-arrivals-at-delta-norway-3-1-1024x682.jpg (from https://topigsnorsvin.mx/news/los-primeros-sementales-han-llegado-a-delta-norway/)
+12:54:28	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada-1-3-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:54:28	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2022/09/opening-innova-canada2-1-1024x768.jpeg (from https://topigsnorsvin.mx/news/topigs-norsvin-inaugura-innova-canada/)
+12:54:31	Error: 	"error:00000005:lib(0)::reason(5)" (-5) after 2 retries at link https://topigsnorsvin.com/tn-content/uploads/2022/07/Mitch_June-2021-683x1024.jpg (from https://topigsnorsvin.mx/news/tips-para-reducir-la-mortalidad-de-la-hembra/)
+
+HTTrack Website Copier/3.49-2 mirror complete in 16 minutes 15 seconds : 431 links scanned, 388 files written (77685067 bytes overall) [65368608 bytes received at 67044 bytes/sec], 19033348 bytes transferred using HTTP compression in 257 files, ratio 22%, 6.0 requests per connection
+(25 errors, 25 warnings, 0 messages)

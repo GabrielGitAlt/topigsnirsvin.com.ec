@@ -1,0 +1,46 @@
+/* topigsnirsvin.com.ec — form handler styles
+   Hides the non-functional captcha widget and styles our status messages. */
+
+/* The Friendly Captcha field is not wired up in this copy; hide it cleanly. */
+.elementor-field-type-frcaptcha,
+.frc-captcha {
+  display: none !important;
+}
+
+/* Honeypot: kept in the DOM for bots, invisible to humans. */
+.tn-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.tn-form-message {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.tn-form-message.elementor-message-success {
+  background: #e7f5ec;
+  color: #1a7f3c;
+  border: 1px solid #b7e0c4;
+}
+
+.tn-form-message.elementor-message-danger {
+  background: #fdecec;
+  color: #c8102e;
+  border: 1px solid #f3c2c2;
+}
+
+.tn-submitting button[type='submit'],
+.tn-submitting input[type='submit'] {
+  opacity: 0.6;
+  cursor: progress;
+}

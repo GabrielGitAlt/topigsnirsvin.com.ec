@@ -1,0 +1,13 @@
+{
+  "name": "topigsnirsvin-com-ec",
+  "private": true,
+  "description": "Exact 1:1 copy of topigsnorsvin.mx for the Ecuador branch, optimized for GitHub Pages.",
+  "scripts": {
+    "optimize-images": "node scripts/optimize-mirror-images.mjs site/topigsnorsvin.mx",
+    "lazy-load": "node scripts/add-lazy-loading.mjs site/topigsnorsvin.mx",
+    "relativize": "node scripts/relativize-paths.mjs site/topigsnorsvin.mx"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

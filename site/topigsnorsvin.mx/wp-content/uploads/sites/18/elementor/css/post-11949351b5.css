@@ -1,0 +1,78 @@
+.elementor-119493 .elementor-element.elementor-element-941cef7{--display:flex;--min-height:22vh;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;}.elementor-119493 .elementor-element.elementor-element-941cef7:not(.elementor-motion-effects-element-type-background), .elementor-119493 .elementor-element.elementor-element-941cef7 > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-position:center center;background-size:cover;}.elementor-119493 .elementor-element.elementor-element-25bcd4c{--display:flex;--flex-direction:column;--container-widget-width:100%;--container-widget-height:initial;--container-widget-flex-grow:0;--container-widget-align-self:initial;--flex-wrap-mobile:wrap;--padding-top:30px;--padding-bottom:030px;--padding-left:0px;--padding-right:0px;}.elementor-119493 .elementor-element.elementor-element-25bcd4c:not(.elementor-motion-effects-element-type-background), .elementor-119493 .elementor-element.elementor-element-25bcd4c > .elementor-motion-effects-container > .elementor-motion-effects-layer{background-color:transparent;background-image:linear-gradient(90deg, var( --e-global-color-primary ) 40%, var( --e-global-color-9fc02d6 ) 100%);}.elementor-widget-heading .elementor-heading-title{font-family:var( --e-global-typography-primary-font-family ), Sans-serif;font-weight:var( --e-global-typography-primary-font-weight );color:var( --e-global-color-primary );}.elementor-119493 .elementor-element.elementor-element-c9bc39d .elementor-heading-title{font-family:"Roboto", Sans-serif;font-size:50px;font-weight:normal;color:var( --e-global-color-83747cc );}.elementor-119493 .elementor-element.elementor-element-cee0897{--display:flex;--align-items:flex-start;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--padding-top:50px;--padding-bottom:0px;--padding-left:0px;--padding-right:0px;}.elementor-119493 .elementor-element.elementor-element-1644471{--display:flex;--align-items:flex-start;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );}.elementor-119493 .elementor-element.elementor-element-f6c4ab9{--display:flex;--align-items:flex-start;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );--padding-top:0px;--padding-bottom:50px;--padding-left:0px;--padding-right:0px;}.elementor-119493 .elementor-element.elementor-element-88b146b{--display:flex;--align-items:flex-start;--container-widget-width:calc( ( 1 - var( --container-widget-flex-grow ) ) * 100% );}.elementor-widget-text-editor{font-family:var( --e-global-typography-text-font-family ), Sans-serif;font-weight:var( --e-global-typography-text-font-weight );color:var( --e-global-color-text );}.elementor-widget-text-editor.elementor-drop-cap-view-stacked .elementor-drop-cap{background-color:var( --e-global-color-primary );}.elementor-widget-text-editor.elementor-drop-cap-view-framed .elementor-drop-cap, .elementor-widget-text-editor.elementor-drop-cap-view-default .elementor-drop-cap{color:var( --e-global-color-primary );border-color:var( --e-global-color-primary );}.elementor-widget .tippy-tooltip .tippy-content{text-align:center;}@media(min-width:768px){.elementor-119493 .elementor-element.elementor-element-25bcd4c{--content-width:1360px;}.elementor-119493 .elementor-element.elementor-element-cee0897{--content-width:1360px;}.elementor-119493 .elementor-element.elementor-element-1644471{--width:952px;}.elementor-119493 .elementor-element.elementor-element-f6c4ab9{--content-width:1360px;}.elementor-119493 .elementor-element.elementor-element-88b146b{--width:952px;}}/* Start Custom Fonts CSS */@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 100;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-ThinItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 100;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Thin.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 500;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-MediumItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 300;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-LightItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: normal;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Italic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: bold;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: bold;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 900;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-BlackItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 900;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Black.ttf') format('truetype');
+}
+/* End Custom Fonts CSS */

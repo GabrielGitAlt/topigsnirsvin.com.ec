@@ -1,0 +1,122 @@
+.elementor-kit-6{--e-global-color-primary:#E6007E;--e-global-color-secondary:#B10061;--e-global-color-text:#404040;--e-global-color-accent:#B10061;--e-global-color-6fd0963:#B2B2B3;--e-global-color-6110cd3:#C9C9CB;--e-global-color-4a7d188:#007FA9;--e-global-color-9fc02d6:#EEBE00;--e-global-color-604cb56:#4CB4E7;--e-global-color-5f92414:#1B8C94;--e-global-color-83747cc:#FFFFFF;--e-global-color-507f8ba:#F6F4F4;--e-global-typography-primary-font-family:"Roboto";--e-global-typography-primary-font-weight:600;--e-global-typography-secondary-font-family:"Roboto";--e-global-typography-secondary-font-weight:400;--e-global-typography-text-font-family:"Roboto";--e-global-typography-text-font-weight:400;--e-global-typography-accent-font-family:"Roboto";--e-global-typography-accent-font-weight:500;color:var( --e-global-color-text );font-family:"Roboto", Sans-serif;font-size:16px;line-height:35px;}.elementor-kit-6 p{margin-block-end:35px;}.elementor-kit-6 a{color:var( --e-global-color-primary );}.elementor-kit-6 a:hover{color:var( --e-global-color-accent );}.elementor-kit-6 h1{color:var( --e-global-color-83747cc );font-family:"Roboto", Sans-serif;font-size:50px;}.elementor-kit-6 h2{color:var( --e-global-color-primary );font-family:"Roboto", Sans-serif;font-size:40px;font-weight:900;}.elementor-kit-6 h3{color:var( --e-global-color-text );font-family:"Roboto", Sans-serif;font-size:20px;font-weight:bold;}.elementor-kit-6 h4{color:var( --e-global-color-83747cc );font-size:30px;font-weight:bold;}.elementor-kit-6 button,.elementor-kit-6 input[type="button"],.elementor-kit-6 input[type="submit"],.elementor-kit-6 .elementor-button{font-family:"Roboto", Sans-serif;font-weight:bold;color:var( --e-global-color-83747cc );background-color:var( --e-global-color-primary );border-radius:0px 0px 0px 0px;}.elementor-kit-6 button:hover,.elementor-kit-6 button:focus,.elementor-kit-6 input[type="button"]:hover,.elementor-kit-6 input[type="button"]:focus,.elementor-kit-6 input[type="submit"]:hover,.elementor-kit-6 input[type="submit"]:focus,.elementor-kit-6 .elementor-button:hover,.elementor-kit-6 .elementor-button:focus{background-color:var( --e-global-color-secondary );border-radius:0px 0px 0px 0px;}.elementor-section.elementor-section-boxed > .elementor-container{max-width:1640px;}.e-con{--container-max-width:1640px;}.elementor-widget:not(:last-child){margin-block-end:20px;}.elementor-element{--widgets-spacing:20px 20px;--widgets-spacing-row:20px;--widgets-spacing-column:20px;}{}h1.entry-title{display:var(--page-title-display);}.elementor-kit-6 e-page-transition{background-color:var( --e-global-color-83747cc );}.site-header .site-branding{flex-direction:column;align-items:stretch;}.site-header{padding-inline-end:0px;padding-inline-start:0px;}.site-footer .site-branding{flex-direction:column;align-items:stretch;}@media(max-width:1024px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:1024px;}.e-con{--container-max-width:1024px;}}@media(max-width:767px){.elementor-section.elementor-section-boxed > .elementor-container{max-width:767px;}.e-con{--container-max-width:767px;}}/* Start custom CSS */#translation .elementor-button-icon svg {
+    width: 30px;
+}
+
+.wp-block-button__link {
+    border-radius: 0px;
+    background-color: var( --e-global-color-primary );
+    color: #fff !important;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 12px 24px;
+    transition: all .3s;
+}
+
+.wp-block-button__link:hover {
+    background-color: var( --e-global-color-secondary );
+}
+
+.elementor-widget-bdt-toggle:hover {
+    background: #fff;
+}
+
+a.cta-tnduroc {
+    border: solid 2px white;
+    border-radius: 35px;
+    padding: 8px 25px;
+    color: white;
+}
+
+a.cta-tnduroc:hover {
+    background: white;
+    transition: .3s;
+}
+
+.elementor-element ul {
+    margin-bottom: 25px;
+}
+
+button.iti__selected-country {
+    background: none;
+}
+button.iti__selected-country:hover, button.iti__selected-country:active {
+    background: none;
+}/* End custom CSS */
+/* Start Custom Fonts CSS */@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 100;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-ThinItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 100;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Thin.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 500;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-MediumItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 300;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Light.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 300;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-LightItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: normal;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Italic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: bold;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: bold;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: italic;
+	font-weight: 900;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-BlackItalic.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 900;
+	font-display: auto;
+	src: url('https://topigsnorsvin.com/mx/wp-content/uploads/sites/18/2024/06/Roboto-Black.ttf') format('truetype');
+}
+/* End Custom Fonts CSS */

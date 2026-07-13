@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# secrets / local config
+.env
+.env.example
+
+# abandoned local experiments — kept on disk, NOT published
+# (the deployable site is site/topigsnorsvin.mx/; these were earlier attempts)
+server/
+web/
+
+# logs / local captures
+*.log
+submissions/
+site/httrack.log
+site/hts-cache/
+
+# OS
+.DS_Store
