@@ -113,3 +113,6 @@ html.tn-noscroll { overflow: hidden; }
 
 /* "Elija su país" country selector removed per request */
 .elementor-element-f7e7bf1 { display: none !important; }
+
+/* Magazine ("revista online") subscribe block removed per request */
+.elementor-element-ffa2879 { display: none !important; }

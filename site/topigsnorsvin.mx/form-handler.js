@@ -310,9 +310,34 @@
     }
   }
 
+  // --- Remove magazine ("revista online") blocks per request ------------
+  function removeMagazine() {
+    // Footer heading "Suscríbase a nuestra revista online"
+    var heads = document.querySelectorAll('.elementor-widget-heading');
+    for (var i = 0; i < heads.length; i++) {
+      var t = heads[i].querySelector('.elementor-heading-title');
+      if (t && /suscr[ií]base a nuestra revista/i.test(t.textContent || '')) heads[i].style.display = 'none';
+    }
+    // Magazine subscribe forms ("Subscribe to our online magazine")
+    var mags = document.querySelectorAll('form[name="Subscribe to our online magazine"], form[aria-label="Subscribe to our online magazine"]');
+    for (var j = 0; j < mags.length; j++) {
+      var w = mags[j].closest('.elementor-widget-form') || mags[j].closest('.elementor-widget') || mags[j];
+      w.style.display = 'none';
+    }
+    // "Revista Online Progress" promo BUTTONS only (not news-article links)
+    var btns = document.querySelectorAll('.elementor-widget-button a, a.elementor-button');
+    for (var k = 0; k < btns.length; k++) {
+      if (/revista online progress/i.test(btns[k].textContent || '')) {
+        var lw = btns[k].closest('.elementor-widget-button') || btns[k].closest('.elementor-widget') || btns[k];
+        lw.style.display = 'none';
+      }
+    }
+  }
+
   function init() {
     var forms = document.querySelectorAll('form.elementor-form');
     for (var i = 0; i < forms.length; i++) wire(forms[i]);
+    removeMagazine();
     fixSlideshowBackgrounds();
     // Retry: Element Pack may build/replace slides after our first pass.
     [300, 1000, 2500].forEach(function (t) { setTimeout(fixSlideshowBackgrounds, t); });
