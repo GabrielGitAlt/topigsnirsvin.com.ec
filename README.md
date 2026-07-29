@@ -35,6 +35,32 @@ The site is static, so forms post to **Web3Forms** (no backend). Tested working.
   in client-side code; the recipient inbox is configured on the
   [web3forms.com](https://web3forms.com) dashboard, not in the repo.
 
+## Infotopigs (boletín semanal)
+
+The **Infotopigs** tab is our own section — it isn't mirrored from Mexico. It
+lists every weekly edition, newest first, grouped by year, so the full history
+of all weeks and years stays on the site.
+
+**To publish Monday's edition:**
+
+1. Drop the PDF in `site/topigsnorsvin.mx/infotopigs/ediciones/`.
+2. Add an entry at the top of the `entries` list in
+   `site/topigsnorsvin.mx/infotopigs/entries.json`:
+   ```json
+   { "date": "2026-08-03",
+     "title": "Título de la edición",
+     "summary": "Resumen corto (opcional).",
+     "url": "ediciones/2026-08-03-infotopigs.pdf" }
+   ```
+3. Rebuild and push:
+   ```bash
+   npm run build-infotopigs
+   ```
+
+The week number ("Semana 31") is derived from the date, so there's nothing to
+count by hand — add `"week": 31` only if you ever need to override it. `url` can
+also be an external link (Drive, Dropbox, …); those open in a new tab.
+
 ## Preview locally
 
 ```bash
@@ -49,9 +75,17 @@ npm install                 # installs sharp (for image optimization)
 npm run optimize-images     # recompress/resize images in place
 npm run lazy-load           # add loading="lazy" to <img> tags
 npm run relativize          # convert any absolute/root-relative asset paths to relative
+npm run build-infotopigs    # regenerate the Infotopigs page from entries.json
 ```
+
+### Ecuador-specific edits live in a script, not just in the HTML
+
+The daily news sync re-downloads pages from Mexico, so any change made only in
+the mirrored HTML would be silently reverted. Site-wide Ecuador changes belong
+in `scripts/apply-ecuador-content.mjs`, which the sync re-runs every night —
+contact details, the Ecuador social links, and the Infotopigs nav tab are all
+applied there.
 
 ## To do
 
-See [TODO.md](TODO.md) — mainly: replace the Mexico office contact details with
-the real Ecuador ones (they appear in the footer of every page).
+See [TODO.md](TODO.md).

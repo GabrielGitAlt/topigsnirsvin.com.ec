@@ -39,6 +39,9 @@ node "$ROOT/scripts/prepare-site.js"
 node "$ROOT/scripts/localize-assets.js"
 node "$ROOT/scripts/relativize-paths.mjs" "$SITE"
 node "$ROOT/scripts/apply-ecuador-content.mjs" "$SITE"
+# Rebuild Infotopigs after the transforms, so it picks up the refreshed header
+# (with the Infotopigs tab) and footer from the freshly-synced news page.
+node "$ROOT/scripts/build-infotopigs.mjs" "$SITE"
 node "$ROOT/scripts/add-lazy-loading.mjs" "$SITE"
 
 # Match the injected form-handler cache version to the rest of the site.

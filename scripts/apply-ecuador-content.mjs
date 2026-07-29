@@ -1,4 +1,5 @@
-// Replace the Mexico branch's contact details with the Ecuador ones, and remove
+// Replace the Mexico branch's contact details with the Ecuador ones, point the
+// social icons at the Ecuador accounts, add the Infotopigs nav tab, and remove
 // the homepage magazine section. Idempotent — safe to re-run (used by the news
 // auto-sync so freshly-pulled pages get Ecuadorized too).
 import fs from 'node:fs';
@@ -23,7 +24,49 @@ const REPL = [
   ['www.topigsnorsvin.mx', 'topigsnorsvin.com.ec'],
   ['Office México', 'Oficina Ecuador'],
   ['es_MX', 'es_EC'],
+
+  // Social icons -> Topigs Norsvin Ecuador accounts. The mirror carries the
+  // Mexico handles in the footer of every page, and the global (corporate)
+  // handles on the "se acerca una tormenta" landing page.
+  ['https://linkedin.com/company/topigsnorsvinmx', 'https://ec.linkedin.com/company/topigs-norsvin-ecuador'],
+  ['https://www.linkedin.com/company/topigs-norsvin/', 'https://ec.linkedin.com/company/topigs-norsvin-ecuador'],
+  ['https://facebook.com/topigsnorsvinmx', 'https://www.facebook.com/share/1BLtVoQEpX/'],
+  ['https://www.facebook.com/TopigsNorsvin/', 'https://www.facebook.com/share/1BLtVoQEpX/'],
+  ['https://www.instagram.com/topigsnorsvinmx/', 'https://www.instagram.com/topigsnorsvinec/'],
+  ['https://www.instagram.com/topigsnorsvin/', 'https://www.instagram.com/topigsnorsvinec/'],
 ];
+
+// Add the "Infotopigs" tab to the main nav, right after "Noticias". The mirror
+// renders that menu item once per nav instance (desktop + mobile dropdown), so
+// we clone each one and keep whatever relative href prefix that page uses.
+// The <li> class list varies per page (some carry current_page_parent etc.) and
+// so does the href on the news item itself (../../noticias/index.html on most
+// pages, index.html on the archive, /noticias/ on the attachment pages). Match
+// it by menu id + label, and reuse the class list minus "you are here" state.
+const NOTICIAS_LI =
+  /<li class="([^"]*menu-item-119267)"><a href="[^"]*"([^>]*)>Noticias<\/a><\/li>/g;
+
+function addInfotopigsTab(html, rel) {
+  if (html.includes('menu-item-119268')) return html; // already added
+  const onSelf = rel === path.join('infotopigs', 'index.html');
+  // Relative to this page's own directory, so it works at any URL depth.
+  const href = path.relative(path.dirname(rel), path.join('infotopigs', 'index.html'))
+    .split(path.sep).join('/');
+  return html.replace(NOTICIAS_LI, (li, liClass, attrs) => {
+    const cls = liClass
+      .replace(/\bcurrent[-_][\w-]+\b/g, '')   // current-menu-item, current_page_parent, ...
+      .replace(/\bmenu-item-119267\b/, 'menu-item-119268')
+      .replace(/\s+/g, ' ').trim();
+    const tabindex = /tabindex="-1"/.test(attrs) ? ' tabindex="-1"' : '';
+    const aCls = onSelf ? 'elementor-item elementor-item-active' : 'elementor-item';
+    const current = onSelf ? ' aria-current="page"' : '';
+    return (
+      li +
+      `<li class="${cls}">` +
+      `<a href="${href}"${current} class="${aCls}"${tabindex}>Infotopigs</a></li>`
+    );
+  });
+}
 
 // Remove a well-formed <div> subtree by its Elementor data-id (depth-counted).
 function removeByDataId(html, id) {
@@ -57,6 +100,7 @@ function process1(file, rel) {
     if (parts.length > 1) { n += parts.length - 1; html = parts.join(b); }
   }
   if (rel === 'index.html') html = removeByDataId(html, 'a4e4efe');
+  html = addInfotopigsTab(html, rel);
   if (html !== before) { fs.writeFileSync(file, html); files++; repl += n; }
 }
 

@@ -1,0 +1,13 @@
+{
+  "_comose_usa": "Cada lunes, añada la nueva edición al principio de 'entries' y ejecute: npm run build-infotopigs. El número de semana se calcula solo a partir de la fecha (puede forzarlo con \"week\": 31). Suba el PDF a site/topigsnorsvin.mx/infotopigs/ediciones/ y apunte 'url' a él.",
+  "_ejemplo": {
+    "date": "2026-08-03",
+    "title": "Título de la edición",
+    "summary": "Una o dos líneas de resumen (opcional).",
+    "url": "ediciones/2026-08-03-infotopigs.pdf"
+  },
+
+  "intro": "Boletín semanal del equipo técnico de Topigs Norsvin Ecuador. Publicamos una nueva edición cada lunes; aquí encontrará el histórico completo de todas las semanas y años.",
+
+  "entries": []
+}
