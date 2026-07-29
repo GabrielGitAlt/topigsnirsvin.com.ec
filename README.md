@@ -61,6 +61,22 @@ The week number ("Semana 31") is derived from the date, so there's nothing to
 count by hand — add `"week": 31` only if you ever need to override it. `url` can
 also be an external link (Drive, Dropbox, …); those open in a new tab.
 
+## Informes (internal reports)
+
+`/informes/` is the restricted section. The site is static and can't check who
+you are, so the reports live in a **shared Google Drive folder** that does the
+access check; the page just explains that and links to it. It's linked from the
+**footer** of every page (deliberately not the main nav — it's for staff), and
+carries `noindex` so it stays out of search results.
+
+Access is managed in Drive — share the folder with each person's email. The
+folder **must be set to "Restricted"**, not "Anyone with the link": this page is
+public, so the link is visible to anyone who looks.
+
+If the folder ever moves — or if we later put the files behind Cloudflare Access
+instead — change `FOLDER_URL` in `scripts/build-informes.mjs`, run
+`npm run build-informes`, and every link on the site keeps working.
+
 ## Preview locally
 
 ```bash
@@ -76,6 +92,7 @@ npm run optimize-images     # recompress/resize images in place
 npm run lazy-load           # add loading="lazy" to <img> tags
 npm run relativize          # convert any absolute/root-relative asset paths to relative
 npm run build-infotopigs    # regenerate the Infotopigs page from entries.json
+npm run build-informes      # regenerate the Informes (internal reports) page
 ```
 
 ### Ecuador-specific edits live in a script, not just in the HTML

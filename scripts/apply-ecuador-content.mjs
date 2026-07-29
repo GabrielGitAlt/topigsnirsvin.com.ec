@@ -68,6 +68,36 @@ function addInfotopigsTab(html, rel) {
   });
 }
 
+// Add "Informes" (the internal-reports section) to the footer menu only — it is
+// for staff, so it stays out of the main nav. The footer menu is the same
+// markup as the header one, so we only touch the part after <footer ...>.
+const CONTACTO_LI =
+  /<li class="([^"]*menu-item-119842)"><a href="[^"]*"([^>]*)>Contacto<\/a><\/li>/g;
+
+function addInformesFooterLink(html, rel) {
+  if (html.includes('menu-item-119269')) return html; // already added
+  const cut = html.indexOf('<footer data-elementor-type="footer"');
+  if (cut === -1) return html;
+  const onSelf = rel === path.join('informes', 'index.html');
+  const href = path.relative(path.dirname(rel), path.join('informes', 'index.html'))
+    .split(path.sep).join('/');
+  const footer = html.slice(cut).replace(CONTACTO_LI, (li, liClass, attrs) => {
+    const cls = liClass
+      .replace(/\bcurrent[-_][\w-]+\b/g, '')
+      .replace(/\bmenu-item-119842\b/, 'menu-item-119269')
+      .replace(/\s+/g, ' ').trim();
+    const tabindex = /tabindex="-1"/.test(attrs) ? ' tabindex="-1"' : '';
+    const aCls = onSelf ? 'elementor-item elementor-item-active' : 'elementor-item';
+    const current = onSelf ? ' aria-current="page"' : '';
+    return (
+      li +
+      `<li class="${cls}">` +
+      `<a href="${href}"${current} class="${aCls}"${tabindex}>Informes</a></li>`
+    );
+  });
+  return html.slice(0, cut) + footer;
+}
+
 // Remove a well-formed <div> subtree by its Elementor data-id (depth-counted).
 function removeByDataId(html, id) {
   const m = new RegExp(`<div[^>]*data-id="${id}"[^>]*>`).exec(html);
@@ -101,6 +131,7 @@ function process1(file, rel) {
   }
   if (rel === 'index.html') html = removeByDataId(html, 'a4e4efe');
   html = addInfotopigsTab(html, rel);
+  html = addInformesFooterLink(html, rel);
   if (html !== before) { fs.writeFileSync(file, html); files++; repl += n; }
 }
 

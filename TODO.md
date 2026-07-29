@@ -12,21 +12,31 @@
 - **Líneas de machos** — only **TN Duroc** and **TN Tempo** are listed. TN Rex
   and TN Select removed from `productos/index.html`.
 
-## 🔴 Pending — private area for internal reports
+## 🔴 Private area for internal reports — built, one thing left
 
-A restricted section to host internal reports was requested, along with options
-for how to implement it. The site is **static on GitHub Pages**, which has no
-server and no real login, so the choice is between:
+`/informes/` is live in the repo: a page explaining the section, linking to the
+shared Drive folder that holds the reports, linked from every page's footer.
+Chosen over Cloudflare Access because the team manages its own Drive
+permissions — nobody has to email us to add or remove a colleague.
 
-| Option | Real security | Cost | Effort |
-|---|---|---|---|
-| Password page in JS (password sits in the page source) | ❌ none — trivially bypassed | free | low |
-| Cloudflare Access in front of `/privado/` (email one-time codes / Google login) | ✅ real | free tier | medium — needs the domain on Cloudflare |
-| Netlify / Vercel password protection | ✅ real | paid tier | low — but moves hosting off GitHub Pages |
-| Shared Google Drive / SharePoint folder, linked from the site | ✅ real | free | lowest |
+**Before this goes public, confirm in Drive:** the folder must be **"Restricted"**
+(specific people), *not* "Anyone with the link". The website is public, so the
+link is visible to anyone — the folder's own setting is the only thing keeping
+the reports private.
 
-**Waiting on a decision before building.** The JS-password option must not be
-presented as secure — anyone can read the password in the page source.
+People on the original request, to share the folder with:
+
+| Name | Email |
+|---|---|
+| Jimena (technical team) | `jmartinez@grupodelago.com` |
+| Mauricio Castillo | `topigs@grupodelago.com` |
+| Yolanda Herrera | `agrocastillo@yahoo.com` |
+| Mirza González | `mgonzalez@grupodelago.com` |
+| Andrea Navarro | `anavarro@topigsnorsvin.com.ec` |
+
+Rejected: a JS password box — the password sits in the page source, so it is not
+security. Still available if they ever want the files served from our own domain:
+Cloudflare Access (free, but needs the domain's DNS moved to Cloudflare).
 
 ## 🟡 Notes / review
 
