@@ -98,6 +98,13 @@ function addInformesFooterLink(html, rel) {
   return html.slice(0, cut) + footer;
 }
 
+// Takes the Informes footer link back out, so turning the section off is just a
+// re-run of this script rather than a hand edit of 88 pages.
+const INFORMES_LI = /<li class="[^"]*menu-item-119269"><a href="[^"]*"[^>]*>Informes<\/a><\/li>/g;
+function removeInformesFooterLink(html) {
+  return html.replace(INFORMES_LI, '');
+}
+
 // Remove a well-formed <div> subtree by its Elementor data-id (depth-counted).
 function removeByDataId(html, id) {
   const m = new RegExp(`<div[^>]*data-id="${id}"[^>]*>`).exec(html);
@@ -131,7 +138,13 @@ function process1(file, rel) {
   }
   if (rel === 'index.html') html = removeByDataId(html, 'a4e4efe');
   html = addInfotopigsTab(html, rel);
-  html = addInformesFooterLink(html, rel);
+  // Informes (internal reports) is on hold: the shared-Drive route needs a
+  // Google account per person and the team's @grupodelago.com addresses don't
+  // have one, so the section has no working destination yet. Re-enable this
+  // line (and the build-informes step in sync-news.sh) once hosting with real
+  // logins is agreed — the page and the footer link are already written.
+  // html = addInformesFooterLink(html, rel);
+  html = removeInformesFooterLink(html);
   if (html !== before) { fs.writeFileSync(file, html); files++; repl += n; }
 }
 

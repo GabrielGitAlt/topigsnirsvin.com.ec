@@ -38,6 +38,19 @@ function isoWeekParts(date) {
 
 const longDate = (d) => `${d.getUTCDate()} de ${MONTHS[d.getUTCMonth()]} de ${d.getUTCFullYear()}`;
 
+// Each edition covers a week, so show the span the way the bulletin itself does
+// ("20 – 26 de julio de 2026"), collapsing the parts the two dates share.
+function longRange(a, b) {
+  if (!b) return longDate(a);
+  if (a.getUTCFullYear() !== b.getUTCFullYear()) return `${longDate(a)} – ${longDate(b)}`;
+  if (a.getUTCMonth() !== b.getUTCMonth()) {
+    return `${a.getUTCDate()} de ${MONTHS[a.getUTCMonth()]} – ${longDate(b)}`;
+  }
+  return `${a.getUTCDate()} – ${longDate(b)}`;
+}
+
+const isImage = (u) => /\.(jpe?g|png|webp|gif|avif)$/i.test(u || '');
+
 const STYLE = `
 <style id="tn-infotopigs">
 .tn-info-wrap{max-width:1140px;margin:0 auto;padding:0 20px}
@@ -58,6 +71,11 @@ const STYLE = `
 .tn-info-week{flex:0 0 auto;min-width:92px;font-family:"Roboto",Sans-serif;font-weight:600;font-size:13px;
   letter-spacing:.06em;text-transform:uppercase;color:#E6007E}
 .tn-info-week b{display:block;font-size:26px;letter-spacing:0;line-height:1.1}
+/* Fixed box, cropped to the top: the editions are tall portrait infographics,
+   and their top edge is the branded "INFOTOPIGS / SEMANA n" header — the most
+   recognisable part — so rows stay even whatever proportions arrive. */
+.tn-info-thumb{flex:0 0 auto;width:76px;height:100px;line-height:0;background:#fff;border:1px solid #e2e0e0}
+.tn-info-thumb img{width:100%;height:100%;display:block;object-fit:cover;object-position:top center}
 .tn-info-body{flex:1 1 auto;min-width:0}
 .tn-info-title{display:block;font-family:"Roboto",Sans-serif;font-size:19px;font-weight:600;color:#404040;line-height:1.35}
 .tn-info-summary{display:block;margin-top:5px;font-size:15px;line-height:1.5;color:#6b6b6b}
@@ -72,7 +90,8 @@ const STYLE = `
   .tn-info-link{flex-wrap:wrap;gap:8px 16px;padding:18px}
   .tn-info-week{min-width:0;display:flex;align-items:baseline;gap:8px}
   .tn-info-week b{font-size:20px}
-  .tn-info-body{flex-basis:100%;order:3}
+  .tn-info-thumb{width:58px;height:76px;order:4}
+  .tn-info-body{flex:1 1 auto;order:5}
   .tn-info-meta{text-align:left;margin-left:auto}
   .tn-info-meta .tn-info-go{margin-top:2px}
 }
@@ -86,22 +105,31 @@ function normalise(e) {
   if (!e.title) throw new Error(`entries.json: falta "title" en la edición del ${e.date}`);
   if (!e.url) throw new Error(`entries.json: falta "url" en la edición del ${e.date}`);
   const iso = isoWeekParts(d);
-  return { ...e, d, week: e.week ?? iso.week, year: String(e.year ?? iso.year) };
+  const until = e.until ? new Date(`${e.until}T00:00:00Z`) : null;
+  if (until && Number.isNaN(until.getTime())) {
+    throw new Error(`entries.json: "until" inválido en la edición del ${e.date}`);
+  }
+  return { ...e, d, until, week: e.week ?? iso.week, year: String(e.year ?? iso.year) };
 }
 
 function renderEntry(e) {
   const summary = e.summary
     ? `<span class="tn-info-summary">${esc(e.summary)}</span>` : '';
   const target = /^https?:\/\//i.test(e.url) ? ' target="_blank" rel="noopener"' : '';
+  // The editions are infographics, so preview the artwork itself when we can.
+  const thumb = isImage(e.url)
+    ? `<span class="tn-info-thumb"><img src="${esc(e.url)}" alt="" loading="lazy" decoding="async"></span>`
+    : '';
   return `
 					<li class="tn-info-item">
 						<a class="tn-info-link" href="${esc(e.url)}"${target}>
 							<span class="tn-info-week">Semana <b>${e.week}</b></span>
+							${thumb}
 							<span class="tn-info-body">
 								<span class="tn-info-title">${esc(e.title)}</span>
 								${summary}
 							</span>
-							<span class="tn-info-meta">${esc(longDate(e.d))}<span class="tn-info-go">Ver edición &rarr;</span></span>
+							<span class="tn-info-meta">${esc(longRange(e.d, e.until))}<span class="tn-info-go">Ver edición &rarr;</span></span>
 						</a>
 					</li>`;
 }

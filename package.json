@@ -7,7 +7,8 @@
     "lazy-load": "node scripts/add-lazy-loading.mjs site/topigsnorsvin.mx",
     "relativize": "node scripts/relativize-paths.mjs site/topigsnorsvin.mx",
     "build-infotopigs": "node scripts/build-infotopigs.mjs site/topigsnorsvin.mx",
-    "build-informes": "node scripts/build-informes.mjs site/topigsnorsvin.mx"
+    "build-informes": "node scripts/build-informes.mjs site/topigsnorsvin.mx",
+    "add-infotopigs": "node scripts/add-infotopigs.mjs"
   },
   "devDependencies": {
     "sharp": "^0.33.5"

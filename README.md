@@ -41,41 +41,47 @@ The **Infotopigs** tab is our own section — it isn't mirrored from Mexico. It
 lists every weekly edition, newest first, grouped by year, so the full history
 of all weeks and years stays on the site.
 
-**To publish Monday's edition:**
+**To publish an edition — one command.** Read the week number and dates off the
+bulletin's own header ("SEMANA 30 / 20 JUL – 26 JUL 2026") and pass them
+straight through, so the page always agrees with what the team published:
 
-1. Drop the PDF in `site/topigsnorsvin.mx/infotopigs/ediciones/`.
-2. Add an entry at the top of the `entries` list in
-   `site/topigsnorsvin.mx/infotopigs/entries.json`:
-   ```json
-   { "date": "2026-08-03",
-     "title": "Título de la edición",
-     "summary": "Resumen corto (opcional).",
-     "url": "ediciones/2026-08-03-infotopigs.pdf" }
-   ```
-3. Rebuild and push:
-   ```bash
-   npm run build-infotopigs
-   ```
+```bash
+npm run add-infotopigs -- --file ~/Downloads/semana30.jpg --week 30 --from 2026-07-20 --to 2026-07-26
+```
 
-The week number ("Semana 31") is derived from the date, so there's nothing to
-count by hand — add `"week": 31` only if you ever need to override it. `url` can
-also be an external link (Drive, Dropbox, …); those open in a new tab.
+That copies the artwork into `infotopigs/ediciones/`, adds the entry to
+`entries.json` and rebuilds the page. Then commit and push. `--title` and
+`--summary` are optional; the default title is "Información semanal del mercado
+porcino ecuatoriano".
 
-## Informes (internal reports)
+Notes:
 
-`/informes/` is the restricted section. The site is static and can't check who
-you are, so the reports live in a **shared Google Drive folder** that does the
-access check; the page just explains that and links to it. It's linked from the
-**footer** of every page (deliberately not the main nav — it's for staff), and
-carries `noindex` so it stays out of search results.
+- **Always pass `--week`.** Their numbering is what readers see on the artwork.
+  Without it the week is derived from the date, which can disagree by one at a
+  year boundary.
+- Image editions (`.jpg`, `.png`, …) get a thumbnail in the archive, cropped to
+  the top so the branded header shows. PDFs just get the text row.
+- `url` in `entries.json` can also be an external link (Drive, Dropbox, …);
+  those open in a new tab.
 
-Access is managed in Drive — share the folder with each person's email. The
-folder **must be set to "Restricted"**, not "Anyone with the link": this page is
-public, so the link is visible to anyone who looks.
+## Informes (internal reports) — built but switched off
 
-If the folder ever moves — or if we later put the files behind Cloudflare Access
-instead — change `FOLDER_URL` in `scripts/build-informes.mjs`, run
-`npm run build-informes`, and every link on the site keeps working.
+`/informes/` is written and ready (`scripts/build-informes.mjs`, plus a footer
+link injected by `apply-ecuador-content.mjs`) but **not published**. The plan was
+a shared Google Drive folder doing the access check, and that fell through:
+Drive requires each authorised person to have a Google account, and the team's
+`@grupodelago.com` addresses are Yahoo-hosted, so sharing is refused outright.
+
+A static host can't check who a visitor is, so a real private area needs either
+Cloudflare Access (free, email one-time codes, works with any address — but the
+domain has to be on Cloudflare) or hosting with a login and an admin panel
+(~USD 10–30/month, and it would also give the team self-service uploads). That's
+the open decision — see [TODO.md](TODO.md).
+
+To switch the section back on: uncomment the `addInformesFooterLink` call in
+`scripts/apply-ecuador-content.mjs` and the `build-informes.mjs` line in
+`scripts/sync-news.sh`, point `FOLDER_URL` at whatever destination is agreed,
+then re-run both scripts.
 
 ## Preview locally
 
@@ -91,8 +97,9 @@ npm install                 # installs sharp (for image optimization)
 npm run optimize-images     # recompress/resize images in place
 npm run lazy-load           # add loading="lazy" to <img> tags
 npm run relativize          # convert any absolute/root-relative asset paths to relative
+npm run add-infotopigs -- …  # publish one Infotopigs edition (see above)
 npm run build-infotopigs    # regenerate the Infotopigs page from entries.json
-npm run build-informes      # regenerate the Informes (internal reports) page
+npm run build-informes      # regenerate the Informes page (currently disabled)
 ```
 
 ### Ecuador-specific edits live in a script, not just in the HTML

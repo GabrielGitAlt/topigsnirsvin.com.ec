@@ -12,31 +12,37 @@
 - **Líneas de machos** — only **TN Duroc** and **TN Tempo** are listed. TN Rex
   and TN Select removed from `productos/index.html`.
 
-## 🔴 Private area for internal reports — built, one thing left
+## 🔴 Private area for internal reports — blocked on a decision
 
-`/informes/` is live in the repo: a page explaining the section, linking to the
-shared Drive folder that holds the reports, linked from every page's footer.
-Chosen over Cloudflare Access because the team manages its own Drive
-permissions — nobody has to email us to add or remove a colleague.
+`/informes/` is written but **switched off** (see README). The shared-Drive route
+failed: Drive refuses to share with an address that has no Google account, and
+every address on the request is Yahoo-hosted —
+`jmartinez@`, `topigs@`, `mgonzalez@` (`@grupodelago.com` runs on Yahoo Business
+Mail), `agrocastillo@yahoo.com`, and `anavarro@topigsnorsvin.com.ec` (own mail
+server). None are Google accounts.
 
-**Before this goes public, confirm in Drive:** the folder must be **"Restricted"**
-(specific people), *not* "Anyone with the link". The website is public, so the
-link is visible to anyone — the folder's own setting is the only thing keeping
-the reports private.
+Remaining options:
 
-People on the original request, to share the folder with:
+| Option | Who has to sign up | Cost | Blocker |
+|---|---|---|---|
+| **Cloudflare Access** — email one-time codes | nobody | free (≤50 users) | needs the domain on Cloudflare, and the domain isn't live yet |
+| **Hosting with logins + admin panel** (e.g. WordPress) | nobody | ~USD 10–30/mo | budget approval; also solves self-service weekly uploads |
+| Shared Drive/OneDrive folder | everyone (one-time Google/Microsoft account) | free | refused today; needs 5 signups |
+| JS password box | nobody | free | ❌ not security — password sits in the page source |
 
-| Name | Email |
-|---|---|
-| Jimena (technical team) | `jmartinez@grupodelago.com` |
-| Mauricio Castillo | `topigs@grupodelago.com` |
-| Yolanda Herrera | `agrocastillo@yahoo.com` |
-| Mirza González | `mgonzalez@grupodelago.com` |
-| Andrea Navarro | `anavarro@topigsnorsvin.com.ec` |
+Bundled with the self-upload request in the reply to the team, since both need a
+server and doing them together is one migration and one bill.
 
-Rejected: a JS password box — the password sits in the page source, so it is not
-security. Still available if they ever want the files served from our own domain:
-Cloudflare Access (free, but needs the domain's DNS moved to Cloudflare).
+## 🔴 Domain is not live
+
+- `topigsnirsvin.com.ec` (this repo's name) has **no nameservers** — nothing
+  resolves. The site is only reachable at the github.io URL.
+- `topigsnorsvin.com.ec` (correct spelling, matches `anavarro@`'s address) **is**
+  registered, on `ns1/ns2.apolo.cloud`, pointing at `77.90.0.212`, and currently
+  serves an empty "Index of /".
+
+Need to confirm which domain is intended and who administers it. Cloudflare
+Access can't be set up until this is settled.
 
 ## 🟡 Notes / review
 
