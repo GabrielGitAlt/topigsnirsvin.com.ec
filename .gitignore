@@ -16,5 +16,9 @@ submissions/
 site/httrack.log
 site/hts-cache/
 
+# python bytecode (scripts/fetch_infotopigs_email.py)
+__pycache__/
+*.pyc
+
 # OS
 .DS_Store
