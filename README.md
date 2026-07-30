@@ -37,9 +37,23 @@ The site is static, so forms post to **Web3Forms** (no backend). Tested working.
 
 ## Infotopigs (boletín semanal)
 
-The **Infotopigs** tab is our own section — it isn't mirrored from Mexico. It
-lists every weekly edition, newest first, grouped by year, so the full history
-of all weeks and years stays on the site.
+The **Infotopigs** tab is our own section — it isn't mirrored from Mexico:
+
+```
+infotopigs/index.html            the archive — every week, grouped by year
+infotopigs/2026-semana-30/       one page per edition (blog-post layout)
+infotopigs/ediciones/            the artwork files themselves
+```
+
+Each edition gets its **own page**, like a news article — title, week, date
+range, the infographic laid out inside the site chrome, download button and
+prev/next links. The archive links to those pages, not to the raw image file.
+
+The two page types copy their chrome from different places on purpose: the
+archive from `noticias/index.html` (depth 1, `../` asset paths) and the editions
+from a news article (depth 2, `../../`). A news article is already a blog-post
+layout at exactly the depth the editions sit at, so its relative asset paths
+carry over untouched — nothing has to be rewritten and nothing can drift.
 
 **To publish an edition — one command.** Read the week number and dates off the
 bulletin's own header ("SEMANA 30 / 20 JUL – 26 JUL 2026") and pass them
