@@ -24,6 +24,8 @@ Environment:
 
 Flags:
   --dry-run   report what would happen; publish nothing, mark nothing as read
+  --debug     list every folder and the newest messages in each; changes nothing
+              (for "I sent it but nothing happened" — usually Spam or a typo)
 """
 from __future__ import annotations
 
@@ -50,6 +52,7 @@ MIN_IMAGE_BYTES = 30_000
 IMAGE_EXT = (".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif", ".pdf")
 
 DRY_RUN = "--dry-run" in sys.argv
+DEBUG = "--debug" in sys.argv
 
 
 def log(msg: str) -> None:
@@ -151,6 +154,42 @@ def publish(path: Path, week: int, monday: date, sunday: date) -> None:
     subprocess.run(cmd, cwd=REPO, check=True)
 
 
+def debug_dump(M: imaplib.IMAP4_SSL) -> None:
+    """Where did the mail actually land? Read-only tour of every folder."""
+    typ, folders = M.list()
+    names = []
+    for raw in folders or []:
+        line = raw.decode(errors="replace") if isinstance(raw, bytes) else str(raw)
+        m = re.search(r'"([^"]*)"\s*$', line) or re.search(r'(\S+)\s*$', line)
+        if m:
+            names.append(m.group(1))
+    log(f"  carpetas: {', '.join(names)}")
+
+    for name in names:
+        try:
+            typ, data = M.select(f'"{name}"', readonly=True)
+            if typ != "OK":
+                continue
+            total = int(data[0])
+            typ, unseen = M.search(None, "UNSEEN")
+            n_unseen = len(unseen[0].split()) if typ == "OK" else 0
+        except Exception as exc:
+            log(f"  [{name}] no se pudo abrir ({exc})")
+            continue
+        if not total:
+            continue
+        log(f"  [{name}] {total} mensaje(s), {n_unseen} sin leer")
+        typ, ids = M.search(None, "ALL")
+        for num in (ids[0].split() if typ == "OK" else [])[-6:]:
+            typ, raw = M.fetch(num, "(BODY.PEEK[HEADER.FIELDS (FROM SUBJECT DATE)])")
+            if typ != "OK" or not raw or not isinstance(raw[0], tuple):
+                continue
+            hdr = email.message_from_bytes(raw[0][1])
+            sender = email.utils.parseaddr(hdr.get("From") or "")[1]
+            log(f"      · {sender or '(?)'} — {decode(hdr.get('Subject'))[:58]}"
+                f"  [{decode(hdr.get('Date'))[:31]}]")
+
+
 def main() -> int:
     host, user, password = need("IMAP_HOST"), need("IMAP_USER"), need("IMAP_PASS")
     port = int(os.environ.get("IMAP_PORT") or 993)
@@ -168,6 +207,11 @@ def main() -> int:
     published = 0
     with imaplib.IMAP4_SSL(host, port) as M:
         M.login(user, password)
+
+        if DEBUG:
+            debug_dump(M)
+            return 0
+
         M.select(mailbox, readonly=DRY_RUN)
         typ, data = M.search(None, "UNSEEN")
         if typ != "OK":

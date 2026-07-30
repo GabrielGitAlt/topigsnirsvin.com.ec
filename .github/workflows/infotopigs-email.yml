@@ -20,6 +20,10 @@ on:
         description: 'Only report what would be published; change nothing'
         type: boolean
         default: false
+      debug:
+        description: 'List every folder and its newest messages; change nothing'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -61,7 +65,8 @@ jobs:
           # and the job would pass while nothing got published.
           set -o pipefail
           python3 scripts/fetch_infotopigs_email.py \
-            ${{ inputs.dry_run && '--dry-run' || '' }} | tee run.log
+            ${{ inputs.dry_run && '--dry-run' || '' }} \
+            ${{ inputs.debug && '--debug' || '' }} | tee run.log
           echo '### Infotopigs' >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           cat run.log >> "$GITHUB_STEP_SUMMARY"
