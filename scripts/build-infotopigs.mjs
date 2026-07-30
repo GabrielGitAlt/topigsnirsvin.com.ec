@@ -115,14 +115,18 @@ function normalise(e) {
 function renderEntry(e) {
   const summary = e.summary
     ? `<span class="tn-info-summary">${esc(e.summary)}</span>` : '';
-  const target = /^https?:\/\//i.test(e.url) ? ' target="_blank" rel="noopener"' : '';
+  // Open in a new tab so the archive stays put, and tell Elementor to keep its
+  // hands off: its LightboxManager grabs any link ending in an image extension
+  // and calls preventDefault, but the lightbox itself doesn't work in this
+  // static mirror — so the click would just do nothing at all.
+  const linkAttrs = ' target="_blank" rel="noopener" data-elementor-open-lightbox="no"';
   // The editions are infographics, so preview the artwork itself when we can.
   const thumb = isImage(e.url)
     ? `<span class="tn-info-thumb"><img src="${esc(e.url)}" alt="" loading="lazy" decoding="async"></span>`
     : '';
   return `
 					<li class="tn-info-item">
-						<a class="tn-info-link" href="${esc(e.url)}"${target}>
+						<a class="tn-info-link" href="${esc(e.url)}"${linkAttrs}>
 							<span class="tn-info-week">Semana <b>${e.week}</b></span>
 							${thumb}
 							<span class="tn-info-body">
