@@ -286,8 +286,10 @@ def main() -> int:
             log(f"{label}\n      semana {week} de {year} ({monday} .. {sunday}), {len(att[1]) // 1024} KB")
 
             if already_published(week, year):
-                log("      ya estaba publicada; marco el correo como leído")
-                if not DRY_RUN:
+                if DRY_RUN:
+                    log("      ya estaba publicada; (dry-run) la dejaría sin leer")
+                else:
+                    log("      ya estaba publicada; marco el correo como leído")
                     M.store(num, "+FLAGS", "\\Seen")
                 continue
 

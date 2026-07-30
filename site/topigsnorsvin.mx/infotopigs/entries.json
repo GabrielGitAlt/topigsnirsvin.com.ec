@@ -9,14 +9,5 @@
     "url": "ediciones/2026-semana-30.jpg"
   },
   "intro": "Boletín semanal del equipo técnico de Topigs Norsvin Ecuador. Publicamos una nueva edición cada lunes; aquí encontrará el histórico completo de todas las semanas y años.",
-  "entries": [
-    {
-      "date": "2026-07-20",
-      "until": "2026-07-26",
-      "week": 30,
-      "title": "Información semanal del mercado porcino ecuatoriano",
-      "summary": "Precio nacional estable en $2.10/kg en pie en todas las regiones. Tendencia semanal: estable.",
-      "url": "ediciones/2026-semana-30.jpg"
-    }
-  ]
+  "entries": []
 }
