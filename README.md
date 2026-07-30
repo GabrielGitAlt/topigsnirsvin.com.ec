@@ -73,6 +73,11 @@ Notes:
 - **Always pass `--week`.** Their numbering is what readers see on the artwork.
   Without it the week is derived from the date, which can disagree by one at a
   year boundary.
+- **Incoming artwork is recompressed automatically** to the site's image budget
+  (JPEG q84, max 2560px wide — the same settings as `optimize-images`), so a
+  1.4 MB phone-exported PNG lands as a ~200 KB JPEG. PDFs and animated images
+  pass through untouched. Needs `npm install` (sharp); without it the file is
+  copied as-is with a warning.
 - Image editions (`.jpg`, `.png`, …) get a thumbnail in the archive, cropped to
   the top so the branded header shows. PDFs just get the text row.
 - `url` in `entries.json` can also be an external link (Drive, Dropbox, …);

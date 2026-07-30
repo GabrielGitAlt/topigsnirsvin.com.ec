@@ -42,14 +42,57 @@ if (data.entries.some((e) => e.date === args.from)) {
 
 // Name the file after the week it covers, so the folder sorts chronologically
 // and the URL says what it is.
-const ext = path.extname(args.file).toLowerCase();
 const week = args.week ? String(args.week).padStart(2, '0') : null;
-const base = week
-  ? `${args.from.slice(0, 4)}-semana-${week}${ext}`
-  : `${args.from}${ext}`;
+const stem = week ? `${args.from.slice(0, 4)}-semana-${week}` : args.from;
 
-fs.mkdirSync(EDS, { recursive: true });
-fs.copyFileSync(args.file, path.join(EDS, base));
+// The team sends whatever their tools produce — the week-30 bulletin arrived as
+// a 1.4 MB PNG of a 1131×1600 infographic. Recompress on the way in to the same
+// budget as the rest of the site (see optimize-mirror-images.mjs): JPEG q84
+// mozjpeg, capped at 2560px wide. PDFs and animated images pass through as-is,
+// and so does anything sharp can't read or can't actually make smaller.
+const CONVERTIBLE = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
+const kb = (n) => `${Math.round(n / 1024)} KB`;
+
+async function webReadyCopy(src) {
+  const ext = path.extname(src).toLowerCase();
+  const orig = fs.readFileSync(src);
+  let out = { name: stem + ext, data: orig, note: '' };
+
+  if (CONVERTIBLE.has(ext)) {
+    try {
+      const { default: sharp } = await import('sharp');
+      const img = sharp(src, { failOn: 'none' });
+      const md = await img.metadata();
+      if ((md.pages ?? 1) > 1) {
+        out.note = ' (animada, se copia tal cual)';
+      } else {
+        const buf = await img
+          .rotate() // apply EXIF orientation, in case it comes off a phone
+          .flatten({ background: '#ffffff' }) // JPEG has no alpha channel
+          .resize({ width: 2560, withoutEnlargement: true })
+          .jpeg({ quality: 84, mozjpeg: true, progressive: true })
+          .toBuffer();
+        if (buf.length < orig.length) {
+          out = { name: `${stem}.jpg`, data: buf, note: ` (optimizada: ${kb(orig.length)} -> ${kb(buf.length)})` };
+        }
+      }
+    } catch (e) {
+      console.warn(`add-infotopigs: no pude optimizar la imagen (${e.message}); la copio tal cual. Ejecute \`npm install\` para habilitar la compresión.`);
+    }
+  }
+
+  fs.mkdirSync(EDS, { recursive: true });
+  // Replacing an edition can change the extension (.png -> .jpg); drop any
+  // artwork left over for the same week so orphans don't pile up.
+  for (const f of fs.readdirSync(EDS)) {
+    if (f !== out.name && path.parse(f).name === stem) fs.unlinkSync(path.join(EDS, f));
+  }
+  fs.writeFileSync(path.join(EDS, out.name), out.data);
+  return out;
+}
+
+const saved = await webReadyCopy(args.file);
+const base = saved.name;
 
 const entry = {
   date: args.from,
@@ -63,7 +106,7 @@ const entry = {
 data.entries.unshift(entry);
 fs.writeFileSync(DATA, `${JSON.stringify(data, null, 2)}\n`);
 
-console.log(`add-infotopigs: agregada semana ${args.week ?? '(auto)'} -> infotopigs/ediciones/${base}`);
+console.log(`add-infotopigs: agregada semana ${args.week ?? '(auto)'} -> infotopigs/ediciones/${base}${saved.note}`);
 
 // Rebuild so the page is ready to commit.
 const { spawnSync } = await import('node:child_process');

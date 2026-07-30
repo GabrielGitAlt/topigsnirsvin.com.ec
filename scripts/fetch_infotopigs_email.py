@@ -121,10 +121,14 @@ def biggest_attachment(msg: email.message.Message) -> tuple[str, bytes] | None:
             continue
         if len(data) < MIN_IMAGE_BYTES:
             continue
+        ext = Path(name).suffix.lower()
+        if ext not in IMAGE_EXT:
+            ext = ".pdf" if ctype == "application/pdf" else "." + (ctype.split("/")[-1] or "jpg")
+        if ext not in IMAGE_EXT:
+            # e.g. image/heic straight off an iPhone — browsers can't show it,
+            # so skipping (mail stays unread) beats publishing a broken image.
+            continue
         if best is None or len(data) > len(best[1]):
-            ext = Path(name).suffix.lower()
-            if ext not in IMAGE_EXT:
-                ext = ".pdf" if ctype == "application/pdf" else "." + (ctype.split("/")[-1] or "jpg")
             best = (ext, data)
     return best
 
