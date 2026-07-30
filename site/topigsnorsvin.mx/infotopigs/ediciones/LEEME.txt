@@ -1,2 +1,7 @@
-Suba aquí los PDF de cada edición de Infotopigs.
-Luego añádalos a ../entries.json y ejecute: npm run build-infotopigs
+Ediciones de Infotopigs (una por semana).
+
+Para publicar una edición nueva, desde la raíz del repositorio:
+  npm run add-infotopigs -- --file <archivo> --week <n> --from <lunes> --to <domingo>
+
+Ejemplo:
+  npm run add-infotopigs -- --file ~/Downloads/semana31.jpg --week 31 --from 2026-07-27 --to 2026-08-02
