@@ -97,6 +97,45 @@ To switch the section back on: uncomment the `addInformesFooterLink` call in
 `scripts/sync-news.sh`, point `FOLDER_URL` at whatever destination is agreed,
 then re-run both scripts.
 
+### Publishing automatically from email
+
+`.github/workflows/infotopigs-email.yml` checks a mailbox every hour and
+publishes anything new, so nobody has to run the command. The team sends the
+bulletin as an email attachment exactly as they do today — **no account, no
+login, no subject format required.**
+
+The week is worked out from the day the mail arrives: they send on Monday (or a
+day or two later) for the week that just ended, so "the ISO week containing
+arrival − 7 days" is right either way. A subject mentioning `semana 31`
+overrides it, for a week sent out of step.
+
+**Setup — four repo secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | Value |
+|---|---|
+| `IMAP_HOST` | e.g. `imap.gmail.com` |
+| `IMAP_USER` | the mailbox login |
+| `IMAP_PASS` | an **app password**, not the account password |
+| `ALLOWED_SENDERS` | comma-separated addresses allowed to publish |
+
+Optional: `IMAP_PORT` (993), `IMAP_MAILBOX` (INBOX).
+
+Use a **dedicated throwaway mailbox**. `IMAP_PASS` grants full read access to
+whatever inbox it belongs to, and this repo is public — don't point it at a
+personal account. Proton Mail won't work: it has no plain IMAP, only a local
+desktop Bridge app that a CI runner can't reach.
+
+`ALLOWED_SENDERS` is the security boundary — anyone can email the address, so
+mail from anyone not on that list is ignored.
+
+To test without publishing anything, run the workflow manually with **dry run**
+ticked; it reports what it would do and marks nothing as read. If a run fails it
+opens an issue labelled `infotopigs-auto` rather than failing silently, since a
+quiet breakage would just mean a stale site.
+
+Mail that can't be published (no attachment, unknown sender) is left **unread**,
+so fixing the cause and re-running picks it up — an edition is never lost.
+
 ## Preview locally
 
 ```bash

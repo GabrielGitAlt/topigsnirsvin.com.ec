@@ -1,0 +1,118 @@
+name: Publish Infotopigs from email
+
+# Checks a mailbox for the weekly bulletin and publishes it. The team sends the
+# infographic as an email attachment exactly as they do today — no account, no
+# login, no subject format required. See scripts/fetch_infotopigs_email.py.
+#
+# Secrets needed (Settings -> Secrets and variables -> Actions):
+#   IMAP_HOST        e.g. imap.gmail.com
+#   IMAP_USER        the mailbox login
+#   IMAP_PASS        an app password for that mailbox — NOT the main password
+#   ALLOWED_SENDERS  comma-separated addresses allowed to publish
+# Optional: IMAP_PORT (993), IMAP_MAILBOX (INBOX)
+
+on:
+  schedule:
+    - cron: '17 * * * *' # hourly, off the hour to avoid the busy minute
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only report what would be published; change nothing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+# Never let two runs publish the same edition twice.
+concurrency:
+  group: infotopigs-email
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Read the mailbox and publish any new edition
+        id: fetch
+        env:
+          IMAP_HOST: ${{ secrets.IMAP_HOST }}
+          IMAP_USER: ${{ secrets.IMAP_USER }}
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+          IMAP_PORT: ${{ secrets.IMAP_PORT }}
+          IMAP_MAILBOX: ${{ secrets.IMAP_MAILBOX }}
+          ALLOWED_SENDERS: ${{ secrets.ALLOWED_SENDERS }}
+        run: |
+          # pipefail: without it, tee's success would mask a crash in the script
+          # and the job would pass while nothing got published.
+          set -o pipefail
+          python3 scripts/fetch_infotopigs_email.py \
+            ${{ inputs.dry_run && '--dry-run' || '' }} | tee run.log
+          echo '### Infotopigs' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat run.log >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          rm -f run.log
+
+      - name: Commit the new edition
+        id: commit
+        if: steps.fetch.outputs.published != '0'
+        run: |
+          git config user.name "infotopigs-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Infotopigs: publish edition received by email"
+            git push
+          fi
+
+      # A push made with GITHUB_TOKEN doesn't trigger the deploy workflow, so
+      # publish to Pages here — same approach as sync-news.yml.
+      - name: Configure Pages
+        if: steps.fetch.outputs.published != '0'
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        if: steps.fetch.outputs.published != '0'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/topigsnorsvin.mx
+      - name: Deploy
+        id: deployment
+        if: steps.fetch.outputs.published != '0'
+        uses: actions/deploy-pages@v4
+
+      # A silent failure here means a stale site nobody notices, so make it loud.
+      - name: Report a failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const title = 'Infotopigs: la publicación automática falló';
+            const { data } = await github.rest.issues.listForRepo({
+              ...context.repo, state: 'open', labels: 'infotopigs-auto',
+            });
+            const body = `La revisión automática del correo falló.\n\n[Ver el registro](${url})\n\n`
+              + `Mientras se resuelve, la edición se puede publicar a mano:\n\n`
+              + '```bash\nnpm run add-infotopigs -- --file <archivo> --week <n> --from <lunes> --to <domingo>\n```';
+            if (data.length) {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: data[0].number, body });
+            } else {
+              await github.rest.issues.create({ ...context.repo, title, body, labels: ['infotopigs-auto'] });
+            }
