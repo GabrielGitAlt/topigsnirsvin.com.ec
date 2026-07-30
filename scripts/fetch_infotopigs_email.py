@@ -190,6 +190,44 @@ def debug_dump(M: imaplib.IMAP4_SSL) -> None:
                 f"  [{decode(hdr.get('Date'))[:31]}]")
 
 
+def warn_about_spam(M: imaplib.IMAP4_SSL, allowed: set[str]) -> int:
+    """A bulletin filtered into Spam would otherwise fail completely silently.
+
+    We deliberately do NOT publish from Spam — that folder is exactly where
+    forged mail claiming to be an approved sender would land, and honouring it
+    would undo the allowlist. So: notice it, say so loudly, and let a human
+    move it or add a Gmail filter.
+    """
+    typ, folders = M.list()
+    spam = []
+    for raw in folders or []:
+        line = raw.decode(errors="replace") if isinstance(raw, bytes) else str(raw)
+        m = re.search(r'"([^"]*)"\s*$', line) or re.search(r'(\S+)\s*$', line)
+        if m and re.search(r'(spam|junk)$', m.group(1), re.I):
+            spam.append(m.group(1))
+
+    stuck = 0
+    for name in spam:
+        try:
+            if M.select(f'"{name}"', readonly=True)[0] != "OK":
+                continue
+            typ, ids = M.search(None, "UNSEEN")
+            for num in (ids[0].split() if typ == "OK" else []):
+                typ, raw = M.fetch(num, "(BODY.PEEK[HEADER.FIELDS (FROM SUBJECT)])")
+                if typ != "OK" or not raw or not isinstance(raw[0], tuple):
+                    continue
+                hdr = email.message_from_bytes(raw[0][1])
+                sender = email.utils.parseaddr(hdr.get("From") or "")[1].lower()
+                if sender in allowed:
+                    stuck += 1
+                    log(f"::warning::Correo de {sender} está en {name} y no se publicará: "
+                        f"«{decode(hdr.get('Subject'))[:50]}». Márquelo como 'no es spam' "
+                        f"y cree un filtro para que no vuelva a pasar.")
+        except Exception as exc:
+            log(f"  no pude revisar {name}: {exc}")
+    return stuck
+
+
 def main() -> int:
     host, user, password = need("IMAP_HOST"), need("IMAP_USER"), need("IMAP_PASS")
     port = int(os.environ.get("IMAP_PORT") or 993)
@@ -269,7 +307,10 @@ def main() -> int:
             published += 1
             log("      publicada")
 
-    log(f"fetch-infotopigs: {published} edición(es) publicada(s)")
+        stuck = warn_about_spam(M, allowed)
+
+    log(f"fetch-infotopigs: {published} edición(es) publicada(s)"
+        + (f", {stuck} atrapada(s) en Spam" if stuck else ""))
 
     out = os.environ.get("GITHUB_OUTPUT")
     if out:
