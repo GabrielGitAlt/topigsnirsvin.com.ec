@@ -9,5 +9,13 @@
     "url": "ediciones/2026-semana-30.jpg"
   },
   "intro": "Boletín semanal del equipo técnico de Topigs Norsvin Ecuador. Publicamos una nueva edición cada lunes; aquí encontrará el histórico completo de todas las semanas y años.",
-  "entries": []
+  "entries": [
+    {
+      "date": "2026-07-20",
+      "until": "2026-07-26",
+      "week": 30,
+      "title": "Información semanal del mercado porcino ecuatoriano",
+      "url": "ediciones/2026-semana-30.png"
+    }
+  ]
 }
